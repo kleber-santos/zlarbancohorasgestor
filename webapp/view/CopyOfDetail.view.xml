@@ -1,0 +1,211 @@
+<mvc:View xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:mvc="sap.ui.core.mvc" xmlns:semantic="sap.f.semantic" xmlns:fb="sap.ui.comp.filterbar"
+	controllerName="whr.com.br.ZLARBancoHorasGestor.controller.Detail">
+	<l:VerticalLayout width="100%">
+		<Label text="FilterBar"/>
+		<fb:FilterBar reset="onReset" search="onSearch" showRestoreButton="true" showClearButton="true">
+			<fb:filterItems>
+				<fb:FilterItem name="A" label="Delivery Date">
+					<fb:control>
+						<DatePicker/>
+					</fb:control>				
+				</fb:FilterItem>
+				
+				<fb:FilterItem name="B" label="Region" labelTooltip="Tooltip Example" mandatory="true">
+					<fb:control>
+						
+						<ComboBox >
+						     <items>
+						        <core:Item key="001" text="EMEA"/>
+						        <core:Item key="002" text="America"/>
+						        <core:Item key="003" text="APJ"/>
+						     </items>
+						</ComboBox>						
+					</fb:control>				
+				</fb:FilterItem>				
+			</fb:filterItems>
+			
+			<fb:filterGroupItems>
+				<fb:FilterGroupItem groupName="G1" groupTitle="Group1" name="A" label="Company" labelTooltip="Tooltip GroupItem Example">
+					<fb:control>
+						<Input type="Text"/>
+					</fb:control>				
+				</fb:FilterGroupItem>
+				
+				<fb:FilterGroupItem groupName="G1" groupTitle="Group1" name="B" label="Customer">
+					<fb:control>
+						<Input type="Text"/>
+					</fb:control>				
+				</fb:FilterGroupItem>				
+				
+				<fb:FilterGroupItem groupName="G2" groupTitle="Group2" name="A2" label="Supplier" labelTooltip="Tooltip GroupItem Example">
+					<fb:control>
+						<Input type="Text"/>
+					</fb:control>				
+				</fb:FilterGroupItem>
+				
+				<fb:FilterGroupItem groupName="G2" groupTitle="Group2" name="B2" label="Category">
+					<fb:control>
+						<Input type="Text"/>
+					</fb:control>				
+				</fb:FilterGroupItem>					
+			</fb:filterGroupItems>				
+					
+	    </fb:FilterBar>		
+	</l:VerticalLayout>
+	
+	
+	
+	<semantic:SemanticPage id="detailPage" busy="{detailView>/busy}" busyIndicatorDelay="{detailView>/delay}" headerPinnable="false">
+		<semantic:titleHeading>
+			<Title text="{Stext}"/>
+		</semantic:titleHeading>
+		<semantic:headerContent>
+		
+			<FlexBox alignContent="Center">
+				<Label text="Data Início" labelFor="DP1"/>
+				<DatePicker id="DataInicio" width="140px" placeholder="" displayFormat="dd/MM/yyyy" valueFormat="yyyy-MM-dd" change="handleChange"
+					class="sapUiSmallMarginBottom"/>
+				<Label text="Data Fim" labelFor="DP1"/>
+				<DatePicker id="DataFim" width="140px" placeholder="" displayFormat="dd/MM/yyyy" valueFormat="yyyy-MM-dd" change="handleChange"
+					class="sapUiSmallMarginBottom"/>
+				<RadioButtonGroup columns="5" class="sapUiMediumMarginBottom" select="onSelectTipo">
+					<buttons>
+						<RadioButton id="Analitico" text="Analítico" selected="true"/>
+						<RadioButton id="Sintetico" text="Sintetíco"/>
+					</buttons>
+				</RadioButtonGroup>
+				<Button text="Pesquisar" activeIcon="sap-icon://search" press="carregarAbonos"/>
+			</FlexBox>
+		</semantic:headerContent>
+		<semantic:content/>
+		<Table id="tableAnalitico" items="{ path: '/BH_SINTETICOSet' }" mode="MultiSelect" noDataText="{worklistView>/tableNoDataText}"
+			updateFinished="onUpdateFinished" selectionChange="teste">
+			<headerToolbar></headerToolbar>
+			<columns>
+				<Column minScreenWidth="Tablet">
+					<Label text="Ocorrência" id="Ocorrencia"/>
+				</Column>
+				<Column minScreenWidth="Tablet" demandPopin="true" id="HorasNormaisCol">
+					<Label text="Horas Normais" id="HorasNormais"/>
+				</Column>
+				<Column minScreenWidth="Tablet" demandPopin="true" id="HorasExtrasCol">
+					<header>
+						<Label text="Horas Extras" id="HorasExtras"/>
+					</header>
+				</Column>
+				<Column minScreenWidth="Tablet" demandPopin="true" id="Quantidade1Col">
+					<header>
+						<Label text="Quantidade" id="Quantidade1"/>
+					</header>
+				</Column>
+				<Column minScreenWidth="Tablet" demandPopin="true" id="AusenciaCol">
+					<header>
+						<Label text="Ausência" id="Ausencia"/>
+					</header>
+				</Column>
+				<Column minScreenWidth="Tablet" demandPopin="true" id="Quantidade2Col">
+					<header>
+						<Label text="Quantidade" id="Quantidade2"/>
+					</header>
+				</Column>
+				<Column minScreenWidth="Tablet" demandPopin="true">
+					<header>
+						<Label text="Saldo Bco Mês" id="SaldoBcoMes"/>
+					</header>
+				</Column>
+				<Column minScreenWidth="Tablet" demandPopin="true">
+					<header>
+						<Label text="Acum HE Mês" id="AcumHEMes"/>
+					</header>
+				</Column>
+				<Column minScreenWidth="Tablet" demandPopin="true">
+					<header>
+						<Label text="HE Folha" id="HEFolha"/>
+					</header>
+				</Column>
+				<Column minScreenWidth="Tablet" demandPopin="true">
+					<header>
+						<Label text="Vlr Banco Mês" id="VlrBancoMes"/>
+					</header>
+				</Column>
+				<Column minScreenWidth="Tablet" demandPopin="true">
+					<header>
+						<Label text="Vlr HE Mês" id="VlrHEMes"/>
+					</header>
+				</Column>
+				<Column minScreenWidth="Tablet" demandPopin="true" id="VlrHEFolhaCol">
+					<header>
+						<Label text="Vlr HE Folha" id="VlrHEFolha"/>
+					</header>
+				</Column>
+			</columns>
+			<items>
+				<ColumnListItem>
+					<cells>
+						<VBox>
+							<items>
+								<VBox>
+									<items>
+										<FlexBox alignContent="Center">
+											<Text text="{path: 'ZlDtocor', formatter: '.formatDate'}" id="ZlDtocor"/>
+											<Text text="" id="text_blank03" width="5px"/>
+											<Text xmlns="sap.m" text="{Diasemana}" id="Inicio2"/>
+										</FlexBox>
+									</items>
+								</VBox>
+							</items>
+						</VBox>
+						<VBox>
+							<items>
+								<FlexBox alignContent="Center">
+									<Text text="{path: 'Sobeg', formatter: '.formatTime'}"/>
+									<Text text="" id="text_blank04" width="5px"/>
+									<Text text="-" id="text0001"/>
+									<Text text="" id="text_blank05" width="5px"/>
+									<Text text="{path: 'Soend', formatter: '.formatTime'}"/>
+								</FlexBox>
+								<!--	<FlexBox alignContent="Center">
+										<Label text="Quantidade" id="qtde10"/>
+										<Text text="" id="text_blank06" width="5px"/>
+										<Text text="{path: 'Sollz', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2, roundingMode: 'away_from_zero'} }"/>
+									</FlexBox>-->
+							</items>
+						</VBox>
+						<Text xmlns="sap.m" text="{PspPhtdtx}" id="Fim2"/>
+						<VBox>
+							<items>
+								<FlexBox alignContent="Center">
+									<Text text="{path: 'ZlBeguz', formatter: '.formatTime'}"/>
+									<Text text="" id="text_blank99" width="5px"/>
+									<Text text="-" id="text0002"/>
+									<Text text="" id="text_blank999" width="5px"/>
+									<Text text="{path: 'ZlEnduz', formatter: '.formatTime'}"/>
+									<!--<TimePicker value="{Zl_Beguz}" displayFormat="hh:mm" placeholderSymbol="-" mask="h9:59" id="picker01" width="60px"/>-->
+								</FlexBox>
+							</items>
+						</VBox>
+						<Text text="{path: 'Hrgmt', formatter: '.formatTime'}"/>
+						<Text xmlns="sap.m" text="{Lgtxt}" id="Tipo"/>
+						<Text xmlns="sap.m" text="{ZdescStat}" id="Status"/>
+						<Text xmlns="sap.m" text="test" id="index"/>
+						<Text xmlns="sap.m" text="{Cdmot}" id="Cdmot"/>
+						<Text xmlns="sap.m" text="{Persk}" id="Persk"/>
+						<Text xmlns="sap.m" text="{Pernr}" id="Cname"/>
+						<Text xmlns="sap.m" text="{Vtken}" id="Vtken"/>
+						<Text xmlns="sap.m" text="{ZlLgart}" id="ZlLgart"/>
+						<Text xmlns="sap.m" text="{ZlAnzhl}" id="ZlAnzhl"/>
+						<Text xmlns="sap.m" text="{PspPhtd}" id="PspPhtd"/>
+						<Text xmlns="sap.m" text="{PspPhtdtx}" id="PspPhtdtx"/>
+						<Text xmlns="sap.m" text="{Pabeg}" id="Pabeg"/>
+						<Text xmlns="sap.m" text="{Paend}" id="Paend"/>
+						<Text xmlns="sap.m" text="{TpOcor}" id="TpOcor"/>
+						<Text xmlns="sap.m" text="{Newbegtm}" id="Newbegtm"/>
+						<Text xmlns="sap.m" text="{Newendtm}" id="Newendtm"/>
+						<Text xmlns="sap.m" text="{Awart}" id="Awart"/>
+						<Text xmlns="sap.m" text="{Message}" id="Message"/>
+					</cells>
+				</ColumnListItem>
+			</items>
+		</Table>
+	</semantic:SemanticPage>
+</mvc:View>

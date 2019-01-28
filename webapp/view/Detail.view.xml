@@ -1,0 +1,117 @@
+<mvc:View height="100%" controllerName="whr.com.br.ZLARBancoHorasGestor.controller.Detail" xmlns:mvc="sap.ui.core.mvc"
+	xmlns:fb="sap.ui.comp.filterbar" xmlns:l="sap.ui.layout" xmlns:core="sap.ui.core" xmlns="sap.m">
+	<Page showHeader="true" title="Banco de Horas Gestor" showFooter="true" showNavButton="true">
+		<content>
+			<ObjectHeader ariaLabelledBy="__xmlview0--nameColumnTitle" title="{Stext}" introActive="true" titleActive="true" id="header0"
+				backgroundDesign="Translucent"></ObjectHeader>
+			<l:VerticalLayout width="100%">
+				<fb:FilterBar reset="onReset" showRestoreButton="true" showClearButton="false" showFilterConfiguration="false" search="onPesquisar">
+					<fb:filterItems>
+						<fb:FilterItem name="A" label="Data Início">
+							<fb:control>
+								<DatePicker id="DataInicio" width="140px" placeholder="" displayFormat="dd/MM/yyyy" valueFormat="yyyy-MM-dd" change="handleChange"
+									class="sapUiSmallMarginBottom"/>
+							</fb:control>
+						</fb:FilterItem>
+						<fb:FilterItem name="B" label="Data Fim">
+							<fb:control>
+								<DatePicker id="DataFim" width="140px" placeholder="" displayFormat="dd/MM/yyyy" valueFormat="yyyy-MM-dd" change="handleChange"
+									class="sapUiSmallMarginBottom"/>
+							</fb:control>
+						</fb:FilterItem>
+						<fb:FilterItem name="C" label="Tipo de Relatório">
+							<fb:control>
+								<RadioButtonGroup columns="2" class="sapUiMediumMarginBottom" select="onSelectTipo">
+									<buttons>
+										<RadioButton id="Analitico" text="Analítico" selected="true"/>
+										<RadioButton id="Sintetico" text="Sintetíco"/>
+									</buttons>
+								</RadioButtonGroup>
+							</fb:control>
+						</fb:FilterItem>
+					</fb:filterItems>
+				</fb:FilterBar>
+			</l:VerticalLayout>
+			<Table id="table" items="{ path: '/BH_ANALITICOSet' }" mode="None" noDataText="{worklistView>/tableNoDataText}"
+				updateFinished="onUpdateFinished" selectionChange="teste">
+				<headerToolbar></headerToolbar>
+				<columns>
+					<Column minScreenWidth="Tablet">
+						<Label text="Ocorrência" id="Ocorrencia"/>
+					</Column>
+					<Column minScreenWidth="Tablet" demandPopin="true" id="HorasNormaisCol">
+						<Label text="Horas Normais" id="HorasNormais"/>
+					</Column>
+					<Column minScreenWidth="Tablet" demandPopin="true" id="HorasExtrasCol">
+						<header>
+							<Label text="Horas Extras" id="HorasExtras"/>
+						</header>
+					</Column>
+					<Column minScreenWidth="Tablet" demandPopin="true" id="Quantidade1Col">
+						<header>
+							<Label text="Qtde. HE" id="Quantidade1"/>
+						</header>
+					</Column>
+					<Column minScreenWidth="Tablet" demandPopin="true" id="AusenciaCol">
+						<header>
+							<Label text="Ausência" id="Ausencia"/>
+						</header>
+					</Column>
+					<Column minScreenWidth="Tablet" demandPopin="true" id="Quantidade2Col">
+						<header>
+							<Label text="Qtde. Aus" id="Quantidade2"/>
+						</header>
+					</Column>
+					<Column minScreenWidth="Tablet" demandPopin="true">
+						<header>
+							<Label text="Saldo Bco Mês" id="SaldoBcoMes"/>
+						</header>
+					</Column>
+					<Column minScreenWidth="Tablet" demandPopin="true">
+						<header>
+							<Label text="Acum HE Mês" id="AcumHEMes"/>
+						</header>
+					</Column>
+					<Column minScreenWidth="Tablet" demandPopin="true">
+						<header>
+							<Label text="HE Folha" id="HEFolha"/>
+						</header>
+					</Column>
+					<Column minScreenWidth="Tablet" demandPopin="true">
+						<header>
+							<Label text="Vlr Banco Mês" id="VlrBancoMes"/>
+						</header>
+					</Column>
+					<Column minScreenWidth="Tablet" demandPopin="true">
+						<header>
+							<Label text="Vlr HE Mês" id="VlrHEMes"/>
+						</header>
+					</Column>
+					<Column minScreenWidth="Tablet" demandPopin="true" id="VlrHEFolhaCol">
+						<header>
+							<Label text="Vlr HE Folha" id="VlrHEFolha"/>
+						</header>
+					</Column>
+				</columns>
+				<items>
+					<ColumnListItem>
+						<cells>
+							<Text xmlns="sap.m" text="{Ocorrencia}" id="Ocorrencia2"/>
+							<Text xmlns="sap.m" text="{HorasNormais}" id="HorasNormais2"/>
+							<Text xmlns="sap.m" text="{HorasExtras}" id="HorasExtras2"/>
+							<Text xmlns="sap.m" text="{Qtdehrex}" id="Qtdehrex"/>
+							<Text xmlns="sap.m" text="{Ausencias}" id="Ausencias"/>
+							<Text xmlns="sap.m" text="{Qtdehrau}" id="Qtdehrau"/>
+							<Text xmlns="sap.m" text="{Saldobco}" id="Saldobco"/>
+							<Text xmlns="sap.m" text="{Saldohex}" id="Saldohex"/>
+							<Text xmlns="sap.m" text="{Qtdeheflh}" id="Qtdeheflh"/>
+							<Text xmlns="sap.m" text="{Valorbco}" id="Valorbco"/>
+							<Text xmlns="sap.m" text="{Valorhex}" id="Valorhex"/>
+							<Text xmlns="sap.m" text="{Valorflh}" id="Valorflh"/>
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+		</content>
+	</Page>
+</mvc:View>
